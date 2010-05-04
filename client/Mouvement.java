@@ -15,7 +15,7 @@ public class Mouvement implements Serializable {
 	/** Numero de la bille d'arrivee*/
 	private byte derniere;
 	/** Vecteur de deplacement (direction) */
-	private byte vecteur;
+	private byte vecteur;	
 	
 	/** Vecteur en haut a gauche*/
 	public static final byte HD = 0;

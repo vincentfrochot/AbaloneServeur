@@ -1,7 +1,72 @@
- 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
-public class CommunicationClient{
+
+
+public class CommunicationClient implements Runnable{
+	ObjectInputStream ois;
+	ObjectOutputStream oos;
+	Object o;
+	Mouvement m;		
 	
+	public CommunicationClient(Socket s) {
+		try {	
+			this.oos = new ObjectOutputStream(
+					new BufferedOutputStream(
+						s.getOutputStream()
+					)
+				);
+			oos.flush();
+			this.ois = new ObjectInputStream(
+					new BufferedInputStream(
+						s.getInputStream()
+					)
+				);			
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void run() {
+			// connexion : on doit envoyer un Identifiant de connexion et attendre la reponse du serveur.
+
+			// on doit ici initialiser les valeurs par défaut des différents objets que l'on pourra récupérer.
+			Mouvement m = new Mouvement((byte)(1),(byte)(2),(byte)(3));
+
+			
+			
+			Object o = new Object();
+			while(o != null) {
+/*				
+				System.out.println("pause");
+				try {
+					Thread.currentThread().sleep(3000);
+				}
+				catch(InterruptedException e) {
+					System.err.print("zut");
+				}
+*/				
+				try {
+					oos.writeObject(m); // ces actions sont déclenchées par un click
+					oos.flush();
+					try  { // si c'est un Mouvement que l'on vient d'envoyer, on doit se mettre en écoute
+						o = ois.readObject(); // les clients sont constamment à l'écoute du serveur : seules les actions via la souris permettent d'envoyer des messages au serveur.
+						// ici on doit maintenant tester via instanceof l'objet reçu et modifier notre interface de façon appropriée.
+					}
+					catch (ClassNotFoundException e) {
+						
+					}
+				}
+				catch (IOException e) {
+					
+				}			
+			}
+	}
 	/*
 		Liste des actions:
 		    0000 : CreerPartie

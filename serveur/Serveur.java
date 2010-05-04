@@ -6,7 +6,8 @@ public class Serveur {
 //	public static volatile Partie[] parties; // la liste des salles avec lesquelles on peut interagir
 	public static volatile int nbMessagesEnvoyes;	
 //	long startTime = System.currentTimeMillis();
-
+	
+	
 	public static void main(String[] args) {
 		nbMessagesEnvoyes = 0;
 //		joueursConnectes = new Vector();
