@@ -1,4 +1,4 @@
-/** 
+ 
 
 public class CommunicationClient{
 	
@@ -26,5 +26,4 @@ public class CommunicationClient{
 		
 		return (short)(mouv);
 	}
-	
 }
