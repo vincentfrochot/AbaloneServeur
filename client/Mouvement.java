@@ -70,5 +70,11 @@ public class Mouvement implements Serializable {
 		return vecteur;
 	}
 	
+	public String toString(){
+		String res="";
+		
+		res = res+"Premiere : "+this.premiere+"\n"+"Deuxieme : "+this.derniere+"\n"+"Vecteur : "+this.vecteur+"\n";
 
+		return res;
+	}
 }

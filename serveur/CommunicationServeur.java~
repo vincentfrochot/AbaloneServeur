@@ -51,10 +51,11 @@ class CommunicationServeur implements Runnable {
 		vecteur = (code & 07);
 		
 		Mouvement m = new Mouvement((byte)premiere, (byte)deuxieme, (byte)vecteur);
+>>>>>>> 83414b5d77ff1dfbba1acbff1fd03dde286a5703
 		
 		return m;
 	}
-	
+*/	
 	public void run() {
 		
 		
