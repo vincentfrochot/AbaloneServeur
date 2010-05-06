@@ -82,12 +82,10 @@ class CommunicationServeur implements Runnable {
 					myMouvement = (Mouvement)o;
 					System.out.println(myMouvement);
 					// on doit l'enregistrer dans la bdd et l'envoyer à tous les clients.
-					
 				}
 				else if(o instanceof Message) {
 					myMessage = (Message)o;
 					System.out.println(myMessage);
-					
 				}
 /*
  				else if(o instanceof CreationPartie) {

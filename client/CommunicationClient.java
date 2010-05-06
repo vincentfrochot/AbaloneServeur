@@ -34,10 +34,12 @@ public class CommunicationClient implements Runnable{
 	
 	public void run() {
 			// connexion : on doit envoyer un Identifiant de connexion et attendre la reponse du serveur.
-
+			// j = new Joueur();
+			//joueurConnectes.add(j);
+			
 			// on doit ici initialiser les valeurs par défaut des différents objets que l'on pourra récupérer.
 			Mouvement m = new Mouvement((byte)(1),(byte)(2),(byte)(3));
-
+//			boolean m = true;
 			
 			
 			Object o = new Object();
