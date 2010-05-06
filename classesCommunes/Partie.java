@@ -1,10 +1,7 @@
 import java.lang.*;
 import java.util.*;
 
-
-/**
-* Une partie est simplement un serveur qui attend des connexions puis attend les ordres de la part de joueurs et les redistribue a tous les clients (joueurs, ia, spectateurs) Le createur de la partie possede donc le serveur de la partie. Le serveur de partie possede son propre plateau de jeu sur lequel il effectue les modifications.
-*/
+// sera envoye au client.
 public class Partie {
 	protected VecteurSpectateurs spectateurs;
 	protected VecteurJoueurs joueurs; // permet de gerer plus de 2 joueurs.
@@ -21,9 +18,8 @@ public class Partie {
 	protected final byte NB_BILLES_EJECTER = 1; 
 	/** Score actuel de chaque joueur*/
 	protected int[] score;
-	/** MODE SANS SERVEUR*/
 	
-/**	
+/**	MODE SANS SERVEUR
 	public FenetreJeu f;
 	//
 	public ClickAction listener;
