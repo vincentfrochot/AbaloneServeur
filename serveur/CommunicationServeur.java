@@ -60,22 +60,28 @@ class CommunicationServeur implements Runnable {
 	
 	public void run() {
 		o = new Object();
+		myMouvement = new Mouvement((byte)1, (byte)12, (byte)2);
 		// on doit recuperer les identifiants de connexion et verifier qu'ils sont corrects.
 		
 		// s'ils sont corrects on envoie un objet Joueur qui va être instancié par le client.
 		// sinon on essaie de fermer la connexion (comment faire ?)
 		
 		
+		
 		while(o != null) {
-/*			
+		
 			try {
 				Thread.currentThread().sleep(3000);
 			}
 			catch(InterruptedException e) {
 				System.err.println("interrupted");
 			}
-*/
+
 			try {
+				oos.writeObject(myMouvement);
+				oos.flush();
+				Serveur.joueursConnectes.afficherListe();
+/*				
 				o = (ois.readObject());
 				if(o instanceof Mouvement) {
 					System.out.println("Ceci est un mouvement...");
@@ -87,6 +93,9 @@ class CommunicationServeur implements Runnable {
 					myMessage = (Message)o;
 					System.out.println(myMessage);
 				}
+*/
+				
+				
 /*
  				else if(o instanceof CreationPartie) {
  					Partie partie = new Partie(Serveur.getNbParties()); // la partie devra contenir son numero de partie puisque le Client doit pouvoir l'identifier (ce numéro de partie sera généré par le serveur en fonction du nombre de parties actuellement jouees).
@@ -94,10 +103,10 @@ class CommunicationServeur implements Runnable {
 				}
 */
 			}
-			catch (ClassNotFoundException e) {
+/*			catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			catch(IOException e) {
+*/			catch(IOException e) {
 				e.printStackTrace();
 			}
 		}

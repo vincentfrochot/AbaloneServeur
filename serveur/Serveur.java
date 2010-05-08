@@ -25,7 +25,7 @@ public class Serveur {
 			while(true) {
 				
 				joueursConnectes.ajouter(srvskt.accept());
-				System.out.println(startTime+"-"+System.currentTimeMillis()+"="+(System.currentTimeMillis()-startTime));
+				System.out.println(startTime+"-"+System.currentTimeMillis()+"="+(System.currentTimeMillis()-startTime)+" millisecondes");
 				(new Thread(new CommunicationServeur(srvskt.accept()))).start(); // c'est un Runnable object qu'on lui passe (sa methode run() sera executee).
 			}
 			

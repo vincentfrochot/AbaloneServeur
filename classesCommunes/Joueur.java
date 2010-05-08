@@ -12,8 +12,6 @@ public class Joueur {
 	
 	public Joueur(String pseudo) {
 		this.pseudonyme = pseudo;
-		System.out.println(pseudo+" a rejoint la partie.");
-		br = new BufferedReader(new InputStreamReader(System.in));
 	}
 	public Mouvement jouer() {
 		//System.out.println("Liste des coups possibles : ");

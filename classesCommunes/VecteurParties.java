@@ -9,6 +9,15 @@ public class VecteurParties extends Vector <Partie> {
 	public synchronized void ajouter(Partie p) {
 		this.add(p);
 	}
+	
+	public synchronized void supprimer(Partie p) {
+		this.remove(p);
+	}
+	
+	public synchronized void afficher() {
+		for(Partie p : this)
+			System.out.println(p);
+	}
 /*	a utiliser au cas ou les parties n'ont pas besoin d'etre indexees par le numPartie.
 	public synchronized VecteurParties trier() {
 		VecteurParties clone = new VecteurParties();
