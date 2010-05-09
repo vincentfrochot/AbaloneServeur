@@ -5,7 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-
+/**
+ * sert a lire les objets recus.
+ *
+ */
 
 public class CommunicationClient implements Runnable{
 	ObjectInputStream ois;
@@ -25,7 +28,7 @@ public class CommunicationClient implements Runnable{
 					new BufferedInputStream(
 						s.getInputStream()
 					)
-				);			
+				);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -34,10 +37,12 @@ public class CommunicationClient implements Runnable{
 	
 	public void run() {
 			// connexion : on doit envoyer un Identifiant de connexion et attendre la reponse du serveur.
-
+//			Joueur j = new Joueur("Iawliet");
+			//joueurConnectes.add(j);
+			
 			// on doit ici initialiser les valeurs par défaut des différents objets que l'on pourra récupérer.
 			Mouvement m = new Mouvement((byte)(1),(byte)(2),(byte)(3));
-
+//			boolean m = true;
 			
 			
 			Object o = new Object();
@@ -51,21 +56,34 @@ public class CommunicationClient implements Runnable{
 					System.err.print("zut");
 				}
 */				
-				try {
+				/*				try {
 					oos.writeObject(m); // ces actions sont déclenchées par un click
 					oos.flush();
+			*/		
 					try  { // si c'est un Mouvement que l'on vient d'envoyer, on doit se mettre en écoute
 						o = ois.readObject(); // les clients sont constamment à l'écoute du serveur : seules les actions via la souris permettent d'envoyer des messages au serveur.
 						// ici on doit maintenant tester via instanceof l'objet reçu et modifier notre interface de façon appropriée.
+						if(o instanceof Mouvement) {
+							m = (Mouvement)o;
+							System.out.println(m);
+						}
+						else {
+							System.out.println("Je n'ai pas recu un mouvement.");
+						}
+					
 					}
 					catch (ClassNotFoundException e) {
 						
 					}
-				}
+					catch (IOException e) {
+						System.out.println("erreur d'entree sortie");
+					}
+
+/*				}
 				catch (IOException e) {
 					
 				}			
-			}
+*/			}
 	}
 	/*
 		Liste des actions:

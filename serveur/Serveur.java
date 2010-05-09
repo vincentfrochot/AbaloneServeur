@@ -2,15 +2,21 @@ import java.io.*;
 import java.net.*;
 
 public class Serveur {
-//	public static volatile VectorJoueurs joueursConnectes; // un vecteur de joueurs contenant 
-//	public static volatile Partie[] parties; // la liste des salles avec lesquelles on peut interagir
-	public static volatile int nbMessagesEnvoyes;	
-//	long startTime = System.currentTimeMillis();
+	public static volatile VecteurJoueurs joueursConnectes; // vecteur des joueurs connectés
+//	public static volatile // chats.
+	public static volatile VecteurParties parties; // vecteur des parties (jouées et en attente d'adversaire).
+// le serveur envoie la partie au client ce qui lui permettra de savoir si c'est à lui de jouer ou pas.
+// le client ne pourra jouer que si dans la Partie designee le joueur qui a la main (le joueur que le serveur écoute afin de recevoir un mouvement)
+	public static volatile int nbMessagesEnvoyes;
+	public static long startTime = System.currentTimeMillis();
 	
 	
 	public static void main(String[] args) {
-		nbMessagesEnvoyes = 0;
-//		joueursConnectes = new Vector();
+// init
+		nbMessagesEnvoyes 	= 0;
+		joueursConnectes 	= new VecteurJoueurs();
+		parties				= new VecteurParties();
+		
 		
 		try {
 			ServerSocket srvskt = new ServerSocket(11111);
@@ -18,9 +24,10 @@ public class Serveur {
 			// on attend maintenant les connexions
 			while(true) {
 				
-//				joueursConnectes[nombreJoueursConnectes] = srvskt.accept();
+				joueursConnectes.ajouter(srvskt.accept());
+				System.out.println(startTime+"-"+System.currentTimeMillis()+"="+(System.currentTimeMillis()-startTime)+" millisecondes");
 				(new Thread(new CommunicationServeur(srvskt.accept()))).start(); // c'est un Runnable object qu'on lui passe (sa methode run() sera executee).
-			}			
+			}
 			
 		}
 		catch (IOException e) {
