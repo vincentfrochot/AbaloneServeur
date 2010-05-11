@@ -10,23 +10,43 @@ class CommunicationServeur implements Runnable {
 //	private VectorParties;
 	
 	public CommunicationServeur(Socket sock) {	
-		try {	
+		(new Thread(new EcrivainServeur(sock))).start();
+		(new Thread(new LecteurServeur(sock))).start();		
+
+
+		/*		try {	
+			System.out.println("Je cree oos.");
 			this.oos = new ObjectOutputStream(
-					new BufferedOutputStream(
 						sock.getOutputStream()
-					)
 				);
+			System.out.println("Je flush oos.");
+			oos.close();
+			System.out.println("J'écris sur oos.");
+			oos.writeObject(new Integer(1));
+			System.out.println("Je suis pret a recevoir des ordres1.");
 			oos.flush();
+			System.out.println("Je suis pret a recevoir des ordres2.");
+
+			System.out.println("Je suis pret a recevoir des ordres.");
 			this.ois = new ObjectInputStream(
-					new BufferedInputStream(
 						sock.getInputStream()
-					)
 				);
+System.out.println("Je suis pret a recevoir des ordres.");
+			try {
+				System.out.println("Je suis pret a recevoir des ordres.");
+				Integer i = (Integer)ois.readObject();
+				System.out.println("Je suis pret a recevoir des ordres.");
+			}
+			catch (ClassNotFoundException e) {
+				
+			}			
+			System.out.println("Je suis pret a recevoir des ordres.");
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+*/	}
+	
 /*	
 	public Mouvement decodeMouvement(){
 =======
@@ -59,6 +79,7 @@ class CommunicationServeur implements Runnable {
 	}
 	
 	public void run() {
+		Serveur.joueursConnectes.afficherListe();
 		o = new Object();
 		myMouvement = new Mouvement((byte)1, (byte)12, (byte)2);
 		// on doit recuperer les identifiants de connexion et verifier qu'ils sont corrects.

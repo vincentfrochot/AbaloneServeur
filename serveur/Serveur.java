@@ -23,15 +23,16 @@ public class Serveur {
 
 			// on attend maintenant les connexions
 			while(true) {
-				
+				System.out.println("Pret a accepter une connexion");
 				joueursConnectes.ajouter(srvskt.accept());
 				System.out.println(startTime+"-"+System.currentTimeMillis()+"="+(System.currentTimeMillis()-startTime)+" millisecondes");
+				System.out.println("Je demarre le thread : ");
 				(new Thread(new CommunicationServeur(srvskt.accept()))).start(); // c'est un Runnable object qu'on lui passe (sa methode run() sera executee).
 			}
 			
 		}
 		catch (IOException e) {
-			
+			System.err.println("erreur de creation du socket");
 		}
 	}
 }

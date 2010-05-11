@@ -10,29 +10,48 @@ import java.net.Socket;
  *
  */
 
-public class CommunicationClient implements Runnable{
+public class CommunicationClient implements Runnable {
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
 	Object o;
 	Mouvement m;		
 	
 	public CommunicationClient(Socket s) {
+		(new Thread(new LecteurClient(s))).start();		
+		(new Thread(new EcrivainClient(s))).start();
+
+/*
 		try {	
+			System.out.println("Je cree oos.");
 			this.oos = new ObjectOutputStream(
-					new BufferedOutputStream(
 						s.getOutputStream()
-					)
 				);
+			System.out.println("Je flush oos.");
+			oos.writeObject(new Integer(1));
 			oos.flush();
+			System.out.println("Je cree ois.");
 			this.ois = new ObjectInputStream(
-					new BufferedInputStream(
 						s.getInputStream()
-					)
 				);
+
+			System.out.println("Je vais ecrire.");			
+			oos.writeObject(new Integer(1));
+			System.out.println("envoi effectue.");			
+			oos.flush();	
+			try {
+				System.out.println("Je vais lire.");
+				Integer i = (Integer)ois.readObject();
+				System.out.println("J'ai lu.");
+			}
+			catch (ClassNotFoundException e) {
+				
+			}
+
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+*/
 	}
 	
 	public void run() {
@@ -60,6 +79,7 @@ public class CommunicationClient implements Runnable{
 					oos.writeObject(m); // ces actions sont déclenchées par un click
 					oos.flush();
 			*/		
+				/*
 					try  { // si c'est un Mouvement que l'on vient d'envoyer, on doit se mettre en écoute
 						o = ois.readObject(); // les clients sont constamment à l'écoute du serveur : seules les actions via la souris permettent d'envoyer des messages au serveur.
 						// ici on doit maintenant tester via instanceof l'objet reçu et modifier notre interface de façon appropriée.
@@ -83,7 +103,18 @@ public class CommunicationClient implements Runnable{
 				catch (IOException e) {
 					
 				}			
-*/			}
+				*/
+
+				
+				
+				try {
+					Thread.currentThread().sleep(3000);
+				}
+				catch(InterruptedException e) {
+					System.err.print("zut");
+				}
+				System.out.println("test");
+			}
 	}
 	/*
 		Liste des actions:
