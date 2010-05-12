@@ -13,43 +13,48 @@ import java.net.Socket;
 public class CommunicationClient implements Runnable {
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
-	BufferedInputStream bis;
-	BufferedOutputStream bos;
 	Object o;
 	Mouvement m;		
 	
-	public CommunicationClient(Socket sock) {
-		try {
-			bis = new BufferedInputStream(sock.getInputStream());
-			bos = new BufferedOutputStream(sock.getOutputStream());
-		}
-		catch (IOException e) {
-			System.err.println("Erreur d'e/s");	
-		}
-		
-		System.out.println("connexion creee.");
-	}
-	
-	public void run() {
-		
+	public CommunicationClient(Socket s) {
+		(new Thread(new LecteurClient(s))).start();		
+		(new Thread(new EcrivainClient(s))).start();
+
+/*
 		try {	
 			System.out.println("Je cree oos.");
 			this.oos = new ObjectOutputStream(
-						bos
+						s.getOutputStream()
 				);
 			System.out.println("Je flush oos.");
-			this.oos.flush();
+			oos.writeObject(new Integer(1));
+			oos.flush();
 			System.out.println("Je cree ois.");
 			this.ois = new ObjectInputStream(
-						bis
+						s.getInputStream()
 				);
-			System.out.println("ois cree.");
+
+			System.out.println("Je vais ecrire.");			
+			oos.writeObject(new Integer(1));
+			System.out.println("envoi effectue.");			
+			oos.flush();	
+			try {
+				System.out.println("Je vais lire.");
+				Integer i = (Integer)ois.readObject();
+				System.out.println("J'ai lu.");
+			}
+			catch (ClassNotFoundException e) {
+				
+			}
+
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		
+*/
+	}
+	
+	public void run() {
 			// connexion : on doit envoyer un Identifiant de connexion et attendre la reponse du serveur.
 //			Joueur j = new Joueur("Iawliet");
 			//joueurConnectes.add(j);
@@ -57,10 +62,10 @@ public class CommunicationClient implements Runnable {
 			// on doit ici initialiser les valeurs par défaut des différents objets que l'on pourra récupérer.
 			Mouvement m = new Mouvement((byte)(1),(byte)(2),(byte)(3));
 //			boolean m = true;
-
+			
 			
 			Object o = new Object();
-			while(o != null) {			
+			while(o != null) {
 /*				
 				System.out.println("pause");
 				try {

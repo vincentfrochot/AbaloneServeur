@@ -1,14 +1,12 @@
 import java.io.*;
 
- /*
+/** Code un mouvement
+ * 
  * La premiere bille deplace et la derniere (s'il s'agit d'une poussee la premiere bille = la deuxieme bille).
  * La direction du mouvement.
  */
 
-
- 
 public class Mouvement implements Serializable {
-
 	/** Determine s'il s'agit d'un mouvement réelle lors d'une partie (true) 
 	* ou d'une bille placé lors d'une édition par exemple (false)*/
 	private boolean estMouvement;
@@ -17,7 +15,7 @@ public class Mouvement implements Serializable {
 	/** Numero de la bille d'arrivee*/
 	private byte derniere;
 	/** Vecteur de deplacement (direction) */
-	private byte vecteur;
+	private byte vecteur;	
 	
 	/** Vecteur en haut a gauche*/
 	public static final byte HD = 0;
@@ -72,7 +70,6 @@ public class Mouvement implements Serializable {
 		return vecteur;
 	}
 	
-
 	public String toString(){
 		String res="";
 		

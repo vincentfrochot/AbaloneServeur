@@ -4,48 +4,25 @@ import java.net.*;
 class CommunicationServeur implements Runnable {
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
+	BufferedInputStream bis;
+	BufferedOutputStream bos;	
+	Socket s;
 	Object o;
 	private Mouvement myMouvement;
 	private Message myMessage;
 //	private VectorParties;
 	
-	public CommunicationServeur(Socket sock) {	
-		(new Thread(new EcrivainServeur(sock))).start();
-		(new Thread(new LecteurServeur(sock))).start();		
-
-
-		/*		try {	
-			System.out.println("Je cree oos.");
-			this.oos = new ObjectOutputStream(
-						sock.getOutputStream()
-				);
-			System.out.println("Je flush oos.");
-			oos.close();
-			System.out.println("J'écris sur oos.");
-			oos.writeObject(new Integer(1));
-			System.out.println("Je suis pret a recevoir des ordres1.");
-			oos.flush();
-			System.out.println("Je suis pret a recevoir des ordres2.");
-
-			System.out.println("Je suis pret a recevoir des ordres.");
-			this.ois = new ObjectInputStream(
-						sock.getInputStream()
-				);
-System.out.println("Je suis pret a recevoir des ordres.");
-			try {
-				System.out.println("Je suis pret a recevoir des ordres.");
-				Integer i = (Integer)ois.readObject();
-				System.out.println("Je suis pret a recevoir des ordres.");
-			}
-			catch (ClassNotFoundException e) {
-				
-			}			
-			System.out.println("Je suis pret a recevoir des ordres.");
+	public CommunicationServeur(Socket sock) {
+		try {
+			bis = new BufferedInputStream(sock.getInputStream());
+			bos = new BufferedOutputStream(sock.getOutputStream());
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Erreur d'e/s");	
 		}
-*/	}
+		
+		System.out.println("connexion creee.");
+	}
 	
 /*	
 	public Mouvement decodeMouvement(){
@@ -79,6 +56,25 @@ System.out.println("Je suis pret a recevoir des ordres.");
 	}
 	
 	public void run() {
+		System.out.println("run ! ");
+		
+		
+		try {	
+			System.out.println("Je cree oos.");
+			this.oos = new ObjectOutputStream(
+						bos
+				);
+			this.oos.flush();
+			this.ois = new ObjectInputStream(
+						bis
+				);	
+			System.out.println("Je suis pret a recevoir des ordres.");
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+
 		Serveur.joueursConnectes.afficherListe();
 		o = new Object();
 		myMouvement = new Mouvement((byte)1, (byte)12, (byte)2);
@@ -86,11 +82,20 @@ System.out.println("Je suis pret a recevoir des ordres.");
 		
 		// s'ils sont corrects on envoie un objet Joueur qui va être instancié par le client.
 		// sinon on essaie de fermer la connexion (comment faire ?)
-		
-		
-		
+		while(o != null) {		
+			try {
+				Thread.currentThread().sleep(3000);
+			}
+			catch(InterruptedException e) {
+				System.err.print("zut");
+			}
+			System.out.println("test");
+		}
+			
+			
+			
 		while(o != null) {
-		
+			System.out.println("je suis dans le run");
 			try {
 				Thread.currentThread().sleep(3000);
 			}
