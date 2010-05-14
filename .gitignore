@@ -1,2 +1,6 @@
 client/*.class
+client/*.java~
 serveur/*.class
+serveur/*.java~
+classesCommunes/*.class
+classesCommunes/*.java~

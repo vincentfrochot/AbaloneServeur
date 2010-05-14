@@ -10,32 +10,46 @@ import java.net.Socket;
  *
  */
 
-public class CommunicationClient implements Runnable{
+public class CommunicationClient implements Runnable {
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
+	BufferedInputStream bis;
+	BufferedOutputStream bos;
 	Object o;
 	Mouvement m;		
 	
-	public CommunicationClient(Socket s) {
+	public CommunicationClient(Socket sock) {
+		try {
+			bis = new BufferedInputStream(sock.getInputStream());
+			bos = new BufferedOutputStream(sock.getOutputStream());
+		}
+		catch (IOException e) {
+			System.err.println("Erreur d'e/s");	
+		}
+		
+		System.out.println("connexion creee.");
+	}
+	
+	public void run() {
+		
 		try {	
+			System.out.println("Je cree oos.");
 			this.oos = new ObjectOutputStream(
-					new BufferedOutputStream(
-						s.getOutputStream()
-					)
+						bos
 				);
-			oos.flush();
+			System.out.println("Je flush oos.");
+			this.oos.flush();
+			System.out.println("Je cree ois.");
 			this.ois = new ObjectInputStream(
-					new BufferedInputStream(
-						s.getInputStream()
-					)
+						bis
 				);
+			System.out.println("ois cree.");
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void run() {
+
+		
 			// connexion : on doit envoyer un Identifiant de connexion et attendre la reponse du serveur.
 //			Joueur j = new Joueur("Iawliet");
 			//joueurConnectes.add(j);
@@ -43,10 +57,10 @@ public class CommunicationClient implements Runnable{
 			// on doit ici initialiser les valeurs par défaut des différents objets que l'on pourra récupérer.
 			Mouvement m = new Mouvement((byte)(1),(byte)(2),(byte)(3));
 //			boolean m = true;
-			
+
 			
 			Object o = new Object();
-			while(o != null) {
+			while(o != null) {			
 /*				
 				System.out.println("pause");
 				try {
@@ -60,6 +74,7 @@ public class CommunicationClient implements Runnable{
 					oos.writeObject(m); // ces actions sont déclenchées par un click
 					oos.flush();
 			*/		
+				/*
 					try  { // si c'est un Mouvement que l'on vient d'envoyer, on doit se mettre en écoute
 						o = ois.readObject(); // les clients sont constamment à l'écoute du serveur : seules les actions via la souris permettent d'envoyer des messages au serveur.
 						// ici on doit maintenant tester via instanceof l'objet reçu et modifier notre interface de façon appropriée.
@@ -83,7 +98,18 @@ public class CommunicationClient implements Runnable{
 				catch (IOException e) {
 					
 				}			
-*/			}
+				*/
+
+				
+				
+				try {
+					Thread.currentThread().sleep(3000);
+				}
+				catch(InterruptedException e) {
+					System.err.print("zut");
+				}
+				System.out.println("test");
+			}
 	}
 	/*
 		Liste des actions:

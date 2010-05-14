@@ -15,7 +15,7 @@ public class Serveur {
 // init
 		nbMessagesEnvoyes 	= 0;
 		joueursConnectes 	= new VecteurJoueurs();
-		parties				= new VecteurParties();
+		parties			= new VecteurParties();
 		
 		
 		try {
@@ -23,15 +23,18 @@ public class Serveur {
 
 			// on attend maintenant les connexions
 			while(true) {
-				
-				joueursConnectes.ajouter(srvskt.accept());
+				System.out.println("Pret a accepter une connexion");
+				Socket s = srvskt.accept();
+				System.out.println("J'ajoute le client a la liste : ");
+				joueursConnectes.ajouter(s);
 				System.out.println(startTime+"-"+System.currentTimeMillis()+"="+(System.currentTimeMillis()-startTime)+" millisecondes");
-				(new Thread(new CommunicationServeur(srvskt.accept()))).start(); // c'est un Runnable object qu'on lui passe (sa methode run() sera executee).
+				System.out.println("Je demarre le thread : ");
+				(new Thread(new CommunicationServeur(s))).start(); // c'est un Runnable object qu'on lui passe (sa methode run() sera executee).
 			}
 			
 		}
 		catch (IOException e) {
-			
+			System.err.println("erreur de creation du socket");
 		}
 	}
 }

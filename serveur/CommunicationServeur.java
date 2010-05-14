@@ -4,29 +4,26 @@ import java.net.*;
 class CommunicationServeur implements Runnable {
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
+	BufferedInputStream bis;
+	BufferedOutputStream bos;	
+	Socket s;
 	Object o;
 	private Mouvement myMouvement;
 	private Message myMessage;
 //	private VectorParties;
 	
-	public CommunicationServeur(Socket sock) {	
-		try {	
-			this.oos = new ObjectOutputStream(
-					new BufferedOutputStream(
-						sock.getOutputStream()
-					)
-				);
-			oos.flush();
-			this.ois = new ObjectInputStream(
-					new BufferedInputStream(
-						sock.getInputStream()
-					)
-				);
+	public CommunicationServeur(Socket sock) {
+		try {
+			bis = new BufferedInputStream(sock.getInputStream());
+			bos = new BufferedOutputStream(sock.getOutputStream());
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Erreur d'e/s");	
 		}
+		
+		System.out.println("connexion creee.");
 	}
+	
 /*	
 	public Mouvement decodeMouvement(){
 =======
@@ -59,17 +56,46 @@ class CommunicationServeur implements Runnable {
 	// 	}
 	
 	public void run() {
+		System.out.println("run ! ");
+		
+		
+		try {	
+			System.out.println("Je cree oos.");
+			this.oos = new ObjectOutputStream(
+						bos
+				);
+			this.oos.flush();
+			this.ois = new ObjectInputStream(
+						bis
+				);	
+			System.out.println("Je suis pret a recevoir des ordres.");
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+
+		Serveur.joueursConnectes.afficherListe();
 		o = new Object();
 		myMouvement = new Mouvement((byte)1, (byte)12, (byte)2);
 		// on doit recuperer les identifiants de connexion et verifier qu'ils sont corrects.
 		
 		// s'ils sont corrects on envoie un objet Joueur qui va être instancié par le client.
 		// sinon on essaie de fermer la connexion (comment faire ?)
-		
-		
-		
+		while(o != null) {		
+			try {
+				Thread.currentThread().sleep(3000);
+			}
+			catch(InterruptedException e) {
+				System.err.print("zut");
+			}
+			System.out.println("test");
+		}
+			
+			
+			
 		while(o != null) {
-		
+			System.out.println("je suis dans le run");
 			try {
 				Thread.currentThread().sleep(3000);
 			}
